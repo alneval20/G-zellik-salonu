@@ -2,16 +2,19 @@
 
 import { motion } from 'motion/react';
 import { Phone, Mail, MapPin, Clock, Instagram, Facebook, MessageCircle } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer id="iletisim" className="bg-stone-900 text-white pt-24 pb-12 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-24">
           {/* Contact Info */}
           <div>
-            <span className="text-gold uppercase tracking-[0.3em] text-sm mb-6 block">İletişim</span>
-            <h2 className="text-4xl md:text-5xl font-display mb-12">Bize Ulaşın</h2>
+            <span className="text-gold uppercase tracking-[0.3em] text-sm mb-6 block">{t('footer.contact')}</span>
+            <h2 className="text-4xl md:text-5xl font-display mb-12">{t('footer.title')}</h2>
             
             <div className="space-y-8">
               <div className="flex items-start gap-6">
@@ -19,8 +22,8 @@ export default function Footer() {
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <h4 className="font-display text-xl mb-2">Adres</h4>
-                  <p className="text-white/60 font-light">Fevzipaşa, Aydın Cd. No:117, 09200 Söke/Aydın</p>
+                  <h4 className="font-display text-xl mb-2">{t('footer.address.title')}</h4>
+                  <p className="text-white/60 font-light">{t('footer.address.value')}</p>
                 </div>
               </div>
 
@@ -29,7 +32,7 @@ export default function Footer() {
                   <Phone size={24} />
                 </div>
                 <div>
-                  <h4 className="font-display text-xl mb-2">Telefon / WhatsApp</h4>
+                  <h4 className="font-display text-xl mb-2">{t('footer.phone.title')}</h4>
                   <p className="text-white/60 font-light">+90 544 723 67 02</p>
                 </div>
               </div>
@@ -39,8 +42,8 @@ export default function Footer() {
                   <Clock size={24} />
                 </div>
                 <div>
-                  <h4 className="font-display text-xl mb-2">Çalışma Saatleri</h4>
-                  <p className="text-white/60 font-light">Her Gün: 09:00 - 21:00</p>
+                  <h4 className="font-display text-xl mb-2">{t('footer.hours.title')}</h4>
+                  <p className="text-white/60 font-light">{t('footer.hours.value')}</p>
                 </div>
               </div>
             </div>
@@ -74,10 +77,10 @@ export default function Footer() {
             <span className="text-xl font-display tracking-widest text-white mb-1">ADILE</span>
             <span className="text-[10px] uppercase tracking-[0.3em]">Makeup & Hair Studio</span>
           </div>
-          <p>© 2024 Adile Makeup & Hair Studio. Tüm Hakları Saklıdır.</p>
+          <p>© 2024 Adile Makeup & Hair Studio. {t('footer.rights')}</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">KVKK</a>
-            <a href="#" className="hover:text-white transition-colors">Çerez Politikası</a>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.kvkk')}</a>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.cookies')}</a>
           </div>
         </div>
       </div>

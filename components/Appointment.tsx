@@ -3,39 +3,43 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { format, addDays, startOfDay, isSameDay } from 'date-fns';
-import { tr } from 'date-fns/locale';
+import { tr, enUS } from 'date-fns/locale';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { Calendar as CalendarIcon, Clock, User, Phone, MessageSquare, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const services = [
-  'Gelin Saçı',
-  'Gelin Makyajı',
-  'Profesyonel Makyaj',
-  'Nişan Saçı',
-  'Özel Gün Makyajı',
-  'Saç Tasarımı'
-];
-
-const timeSlots = [
-  '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'
-];
-
-// Mock booked slots for demo
-const bookedSlots = [
-  { date: new Date(), time: '11:00' },
-  { date: new Date(), time: '14:00' },
-  { date: addDays(new Date(), 1), time: '10:00' },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Appointment() {
+  const { t, locale } = useLanguage();
   const [step, setStep] = useState(1);
   const [selectedService, setSelectedService] = useState('');
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [selectedTime, setSelectedTime] = useState('');
   const [formData, setFormData] = useState({ name: '', phone: '', note: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const dateLocale = locale === 'tr' ? tr : enUS;
+
+  const services = [
+    t('services.bridal.hair'),
+    t('services.bridal.makeup'),
+    t('services.makeup.title'),
+    t('services.engagement.hair'),
+    t('services.special.makeup'),
+    t('services.hair.title')
+  ];
+
+  const timeSlots = [
+    '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'
+  ];
+
+  // Mock booked slots for demo
+  const bookedSlots = [
+    { date: new Date(), time: '11:00' },
+    { date: new Date(), time: '14:00' },
+    { date: addDays(new Date(), 1), time: '10:00' },
+  ];
 
   const isSlotBooked = (time: string) => {
     if (!selectedDate) return false;
@@ -45,11 +49,9 @@ export default function Appointment() {
   };
 
   const handleSubmit = () => {
-    // In a real app, save to DB and send WhatsApp
     setIsSubmitted(true);
     
-    // WhatsApp notification link
-    const message = `Yeni Randevu Talebi!\n\nİsim: ${formData.name}\nTelefon: ${formData.phone}\nHizmet: ${selectedService}\nTarih: ${format(selectedDate!, 'dd MMMM yyyy', { locale: tr })}\nSaat: ${selectedTime}\nNot: ${formData.note}`;
+    const message = `${t('appointment.whatsapp.new')}\n\n${t('appointment.form.name')}: ${formData.name}\n${t('appointment.form.phone')}: ${formData.phone}\n${t('appointment.form.service')}: ${selectedService}\n${t('appointment.form.date')}: ${format(selectedDate!, 'dd MMMM yyyy', { locale: dateLocale })}\n${t('appointment.form.time')}: ${selectedTime}\n${t('appointment.form.message')}: ${formData.note}`;
     const whatsappUrl = `https://wa.me/905447236702?text=${encodeURIComponent(message)}`;
     
     setTimeout(() => {
@@ -58,11 +60,11 @@ export default function Appointment() {
   };
 
   const steps = [
-    { n: 1, t: 'Hizmet Seç', d: 'Hizmetinizi belirleyin.' },
-    { n: 2, t: 'Tarih Seç', d: 'Günü belirleyin.' },
-    { n: 3, t: 'Saat Seç', d: 'Saati belirleyin.' },
-    { n: 4, t: 'Bilgilerini Gir', d: 'İletişim bilgileriniz.' },
-    { n: 5, t: 'Onayla', d: 'Randevuyu kontrol edin.' }
+    { n: 1, t: t('appointment.step1.title'), d: t('appointment.step1.desc') },
+    { n: 2, t: t('appointment.step2.title'), d: t('appointment.step2.desc') },
+    { n: 3, t: t('appointment.step3.title'), d: t('appointment.step3.desc') },
+    { n: 4, t: t('appointment.step4.title'), d: t('appointment.step4.desc') },
+    { n: 5, t: t('appointment.step5.title'), d: t('appointment.step5.desc') }
   ];
 
   return (
@@ -74,11 +76,11 @@ export default function Appointment() {
             whileInView={{ opacity: 1 }}
             className="text-gold uppercase tracking-[0.3em] text-sm mb-4 block"
           >
-            Zamanınızı Ayırın
+            {t('appointment.subtitle')}
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-display mb-6">Online Randevu</h2>
+          <h2 className="text-4xl md:text-5xl font-display mb-6">{t('appointment.title')}</h2>
           <p className="text-stone-500 max-w-2xl mx-auto font-light">
-            Size en uygun zamanı seçin, güzelliğinizi profesyonel ellere emanet edin.
+            {t('appointment.desc')}
           </p>
         </div>
 
@@ -112,23 +114,23 @@ export default function Appointment() {
                 </div>
 
                 <div className="mt-12 pt-8 border-t border-white/10">
-                  <p className="text-xs text-white/40 uppercase tracking-widest mb-4">Randevu Özeti</p>
+                  <p className="text-xs text-white/40 uppercase tracking-widest mb-4">{t('appointment.summary.title')}</p>
                   <div className="space-y-3 text-sm font-light">
                     {selectedService && (
                       <div className="flex justify-between items-center">
-                        <span className="text-white/50">Hizmet:</span>
+                        <span className="text-white/50">{t('appointment.form.service')}:</span>
                         <span className="text-gold font-medium">{selectedService}</span>
                       </div>
                     )}
                     {selectedDate && (
                       <div className="flex justify-between items-center">
-                        <span className="text-white/50">Tarih:</span>
-                        <span className="text-gold font-medium">{format(selectedDate, 'dd MMM yyyy', { locale: tr })}</span>
+                        <span className="text-white/50">{t('appointment.form.date')}:</span>
+                        <span className="text-gold font-medium">{format(selectedDate, 'dd MMM yyyy', { locale: dateLocale })}</span>
                       </div>
                     )}
                     {selectedTime && (
                       <div className="flex justify-between items-center">
-                        <span className="text-white/50">Saat:</span>
+                        <span className="text-white/50">{t('appointment.form.time')}:</span>
                         <span className="text-gold font-medium">{selectedTime}</span>
                       </div>
                     )}
@@ -157,7 +159,7 @@ export default function Appointment() {
                         exit={{ opacity: 0, x: -20 }}
                         className="space-y-6"
                       >
-                        <h3 className="text-3xl font-display mb-8">Hangi hizmeti istersiniz?</h3>
+                        <h3 className="text-3xl font-display mb-8">{t('appointment.step1.question')}</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {services.map((service) => (
                             <button
@@ -190,13 +192,13 @@ export default function Appointment() {
                         exit={{ opacity: 0, x: -20 }}
                         className="space-y-8"
                       >
-                        <h3 className="text-3xl font-display">Tarih Belirleyin</h3>
+                        <h3 className="text-3xl font-display">{t('appointment.step2.question')}</h3>
                         <div className="flex justify-center">
                           <DayPicker
                             mode="single"
                             selected={selectedDate}
                             onSelect={(date) => { if(date) { setSelectedDate(date); setStep(3); } }}
-                            locale={tr}
+                            locale={dateLocale}
                             disabled={{ before: new Date() }}
                             className="border-none p-0"
                             classNames={{
@@ -223,13 +225,13 @@ export default function Appointment() {
                           />
                         </div>
                         <div className="flex justify-between pt-8 border-t border-stone-100">
-                          <button onClick={() => setStep(1)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← Geri Dön</button>
+                          <button onClick={() => setStep(1)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← {t('common.back')}</button>
                           <button 
                             disabled={!selectedDate}
                             onClick={() => setStep(3)} 
                             className="bg-stone-900 text-white px-10 py-4 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-gold transition-all disabled:opacity-20"
                           >
-                            Saat Seçimine Geç
+                            {t('appointment.next.time')}
                           </button>
                         </div>
                       </motion.div>
@@ -243,7 +245,7 @@ export default function Appointment() {
                         exit={{ opacity: 0, x: -20 }}
                         className="space-y-8"
                       >
-                        <h3 className="text-3xl font-display">Saat Seçin</h3>
+                        <h3 className="text-3xl font-display">{t('appointment.step3.question')}</h3>
                         <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
                           {timeSlots.map((time) => {
                             const booked = isSlotBooked(time);
@@ -267,13 +269,13 @@ export default function Appointment() {
                           })}
                         </div>
                         <div className="flex justify-between pt-8 border-t border-stone-100">
-                          <button onClick={() => setStep(2)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← Tarih Seçimine Dön</button>
+                          <button onClick={() => setStep(2)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← {t('common.back')}</button>
                           <button 
                             disabled={!selectedTime}
                             onClick={() => setStep(4)} 
                             className="bg-stone-900 text-white px-10 py-4 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-gold transition-all disabled:opacity-20"
                           >
-                            Bilgilerimi Gir
+                            {t('appointment.next.info')}
                           </button>
                         </div>
                       </motion.div>
@@ -287,16 +289,16 @@ export default function Appointment() {
                         exit={{ opacity: 0, x: -20 }}
                         className="space-y-8"
                       >
-                        <h3 className="text-3xl font-display">İletişim Bilgileri</h3>
+                        <h3 className="text-3xl font-display">{t('appointment.step4.question')}</h3>
                         <div className="space-y-6">
                           <div className="space-y-2">
-                            <label className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-bold ml-1">Ad Soyad</label>
+                            <label className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-bold ml-1">{t('appointment.form.name')}</label>
                             <div className="relative">
                               <User className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-300" size={18} />
                               <input
                                 required
                                 type="text"
-                                placeholder="Adınız ve Soyadınız"
+                                placeholder={t('appointment.form.name.placeholder')}
                                 className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-stone-100 focus:border-gold outline-none transition-all bg-stone-50/30"
                                 value={formData.name}
                                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -304,7 +306,7 @@ export default function Appointment() {
                             </div>
                           </div>
                           <div className="space-y-2">
-                            <label className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-bold ml-1">Telefon</label>
+                            <label className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-bold ml-1">{t('appointment.form.phone')}</label>
                             <div className="relative">
                               <Phone className="absolute left-5 top-1/2 -translate-y-1/2 text-stone-300" size={18} />
                               <input
@@ -318,11 +320,11 @@ export default function Appointment() {
                             </div>
                           </div>
                           <div className="space-y-2">
-                            <label className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-bold ml-1">Not / Mesaj (Opsiyonel)</label>
+                            <label className="text-[10px] uppercase tracking-[0.2em] text-stone-400 font-bold ml-1">{t('appointment.form.message')}</label>
                             <div className="relative">
                               <MessageSquare className="absolute left-5 top-6 text-stone-300" size={18} />
                               <textarea
-                                placeholder="Eklemek istediğiniz bir not var mı?"
+                                placeholder={t('appointment.form.message.placeholder')}
                                 rows={3}
                                 className="w-full pl-14 pr-6 py-5 rounded-2xl border-2 border-stone-100 focus:border-gold outline-none transition-all bg-stone-50/30"
                                 value={formData.note}
@@ -332,13 +334,13 @@ export default function Appointment() {
                           </div>
                         </div>
                         <div className="flex justify-between pt-8 border-t border-stone-100">
-                          <button onClick={() => setStep(3)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← Saat Seçimine Dön</button>
+                          <button onClick={() => setStep(3)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← {t('common.back')}</button>
                           <button 
                             disabled={!formData.name || !formData.phone}
                             onClick={() => setStep(5)} 
                             className="bg-stone-900 text-white px-10 py-4 rounded-full text-xs uppercase tracking-widest font-bold hover:bg-gold transition-all disabled:opacity-20"
                           >
-                            Özeti Görüntüle
+                            {t('appointment.next.summary')}
                           </button>
                         </div>
                       </motion.div>
@@ -352,30 +354,30 @@ export default function Appointment() {
                         exit={{ opacity: 0, x: -20 }}
                         className="space-y-8"
                       >
-                        <h3 className="text-3xl font-display">Randevuyu Onayla</h3>
+                        <h3 className="text-3xl font-display">{t('appointment.step5.question')}</h3>
                         <div className="bg-stone-50 rounded-3xl p-8 space-y-6 border border-stone-100">
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div className="space-y-4">
                               <div>
-                                <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">Hizmet</p>
+                                <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">{t('appointment.form.service')}</p>
                                 <p className="text-xl font-display text-stone-900">{selectedService}</p>
                               </div>
                               <div>
-                                <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">Tarih & Saat</p>
+                                <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">{t('appointment.form.date')} & {t('appointment.form.time')}</p>
                                 <p className="text-lg font-medium text-stone-900">
-                                  {format(selectedDate!, 'dd MMMM yyyy', { locale: tr })} - {selectedTime}
+                                  {format(selectedDate!, 'dd MMMM yyyy', { locale: dateLocale })} - {selectedTime}
                                 </p>
                               </div>
                             </div>
                             <div className="space-y-4">
                               <div>
-                                <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">Müşteri Bilgileri</p>
+                                <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">{t('appointment.summary.customer')}</p>
                                 <p className="text-lg font-medium text-stone-900">{formData.name}</p>
                                 <p className="text-stone-500">{formData.phone}</p>
                               </div>
                               {formData.note && (
                                 <div>
-                                  <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">Not</p>
+                                  <p className="text-[10px] uppercase tracking-widest text-stone-400 mb-1">{t('appointment.form.message')}</p>
                                   <p className="text-stone-500 italic text-sm">&quot;{formData.note}&quot;</p>
                                 </div>
                               )}
@@ -388,11 +390,11 @@ export default function Appointment() {
                             onClick={handleSubmit}
                             className="w-full bg-gold text-white py-5 rounded-full text-sm uppercase tracking-[0.2em] font-bold hover:bg-gold-dark transition-all shadow-xl shadow-gold/20"
                           >
-                            Randevuyu Onayla ve WhatsApp&apos;tan Gönder
+                            {t('appointment.form.submit')}
                           </button>
                           <div className="flex justify-between px-2">
-                            <button onClick={() => setStep(4)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← Bilgileri Düzenle</button>
-                            <button onClick={() => setStep(1)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">Hizmeti Değiştir</button>
+                            <button onClick={() => setStep(4)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">← {t('appointment.edit.info')}</button>
+                            <button onClick={() => setStep(1)} className="text-stone-400 hover:text-stone-900 transition-colors uppercase tracking-widest text-xs font-bold">{t('appointment.edit.service')}</button>
                           </div>
                         </div>
                       </motion.div>
@@ -410,16 +412,16 @@ export default function Appointment() {
               <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
                 <CheckCircle2 size={48} />
               </div>
-              <h3 className="text-3xl font-display">Randevu Talebiniz Alındı!</h3>
+              <h3 className="text-3xl font-display">{t('appointment.success.title')}</h3>
               <p className="text-stone-500 max-w-md mx-auto">
-                Randevu talebiniz başarıyla gönderildi. En kısa sürede sizinle iletişime geçilecektir.
+                {t('appointment.success.desc')}
               </p>
-              <p className="text-xs text-stone-400">WhatsApp üzerinden bildirim gönderiliyor...</p>
+              <p className="text-xs text-stone-400">{t('appointment.success.whatsapp')}</p>
               <button 
                 onClick={() => { setIsSubmitted(false); setStep(1); setSelectedService(''); setSelectedTime(''); }}
                 className="mt-8 text-gold uppercase tracking-widest text-xs font-bold hover:underline"
               >
-                Yeni Randevu Al
+                {t('appointment.new')}
               </button>
             </motion.div>
           )}

@@ -3,47 +3,50 @@
 import { motion } from 'motion/react';
 import { Sparkles, Scissors, Heart, Camera, Star, Palette } from 'lucide-react';
 import Image from 'next/image';
-
-const services = [
-  {
-    title: 'Gelin Saçı',
-    description: 'En özel gününüzde yüz hatlarınıza ve gelinliğinize en uygun, kalıcı ve büyüleyici saç tasarımları.',
-    icon: Scissors,
-    image: 'https://images.unsplash.com/photo-1594465919760-441fe5908ab0?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Gelin Makyajı',
-    description: 'Doğal güzelliğinizi vurgulayan, fotoğraf çekimlerinde kusursuz görünen profesyonel gelin makyajı.',
-    icon: Sparkles,
-    image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Profesyonel Makyaj',
-    description: 'Gece makyajı, porselen makyaj ve özel etkinlikler için profesyonel dokunuşlar.',
-    icon: Palette,
-    image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Nişan Saçı',
-    description: 'Nişan ve söz törenleriniz için zarif ve modern saç modelleri.',
-    icon: Heart,
-    image: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Özel Gün Makyajı',
-    description: 'Mezuniyet, doğum günü ve tüm özel davetleriniz için size özel makyaj uygulamaları.',
-    icon: Star,
-    image: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=400&auto=format&fit=crop'
-  },
-  {
-    title: 'Saç Tasarımı',
-    description: 'Kesim, renklendirme ve günlük bakım hizmetleri ile saçlarınızın sağlığını ve şıklığını koruyoruz.',
-    icon: Scissors,
-    image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=400&auto=format&fit=crop'
-  }
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Services() {
+  const { t } = useLanguage();
+
+  const services = [
+    {
+      title: t('services.bridal.hair'),
+      description: t('services.bridal.hair.desc'),
+      icon: Scissors,
+      image: 'https://images.unsplash.com/photo-1594465919760-441fe5908ab0?q=80&w=400&auto=format&fit=crop'
+    },
+    {
+      title: t('services.bridal.makeup'),
+      description: t('services.bridal.makeup.desc'),
+      icon: Sparkles,
+      image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=400&auto=format&fit=crop'
+    },
+    {
+      title: t('services.makeup.title'),
+      description: t('services.makeup.desc'),
+      icon: Palette,
+      image: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=400&auto=format&fit=crop'
+    },
+    {
+      title: t('services.engagement.hair'),
+      description: t('services.engagement.hair.desc'),
+      icon: Heart,
+      image: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=400&auto=format&fit=crop'
+    },
+    {
+      title: t('services.special.makeup'),
+      description: t('services.special.makeup.desc'),
+      icon: Star,
+      image: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=400&auto=format&fit=crop'
+    },
+    {
+      title: t('services.hair.title'),
+      description: t('services.hair.desc'),
+      icon: Scissors,
+      image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=400&auto=format&fit=crop'
+    }
+  ];
+
   return (
     <section id="hizmetler" className="py-24 px-6 bg-stone-50">
       <div className="max-w-7xl mx-auto">
@@ -54,7 +57,7 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-gold uppercase tracking-[0.3em] text-sm mb-4 block"
           >
-            Neler Sunuyoruz?
+            {t('services.subtitle')}
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -63,7 +66,7 @@ export default function Services() {
             transition={{ delay: 0.2 }}
             className="text-4xl md:text-5xl font-display mb-6"
           >
-            Ayrıcalıklı Hizmetlerimiz
+            {t('services.title')}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -72,7 +75,7 @@ export default function Services() {
             transition={{ delay: 0.3 }}
             className="text-stone-500 max-w-2xl mx-auto font-light"
           >
-            Her detayı titizlikle planlanmış, size özel güzellik çözümleri ile kendinizi yeniden keşfedin.
+            {t('services.page.desc')}
           </motion.p>
         </div>
 
@@ -106,7 +109,7 @@ export default function Services() {
                   {service.description}
                 </p>
                 <div className="mt-6 flex items-center text-gold text-xs uppercase tracking-widest font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  Detaylı Bilgi & Randevu →
+                  {t('nav.appointment')} →
                 </div>
               </div>
             </motion.div>

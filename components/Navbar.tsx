@@ -2,22 +2,24 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Instagram, Phone } from 'lucide-react';
+import { Menu, X, Instagram, Phone, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
-
-const navLinks = [
-  { name: 'Ana Sayfa', href: '/' },
-  { name: 'Hakkımızda', href: '/#hakkimizda' },
-  { name: 'Hizmetler', href: '/hizmetler' },
-  { name: 'Galeri', href: '/#galeri' },
-  { name: 'Randevu', href: '/#randevu' },
-  { name: 'İletişim', href: '/#iletisim' },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { locale, setLocale, t } = useLanguage();
+
+  const navLinks = [
+    { name: t('nav.home'), href: '/' },
+    { name: t('nav.about'), href: '/#hakkimizda' },
+    { name: t('nav.services'), href: '/hizmetler' },
+    { name: t('nav.gallery'), href: '/#galeri' },
+    { name: t('nav.appointment'), href: '/#randevu' },
+    { name: t('nav.contact'), href: '/#iletisim' },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,23 +66,67 @@ export default function Navbar() {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="hidden md:flex items-center space-x-6">
+          {/* Language Switcher */}
+          <div className="flex items-center bg-stone-100/50 rounded-full p-1 border border-stone-200">
+            <button
+              onClick={() => setLocale('tr')}
+              className={cn(
+                "px-3 py-1 rounded-full text-[10px] font-bold transition-all",
+                locale === 'tr' ? "bg-gold text-white shadow-sm" : "text-stone-500 hover:text-stone-800"
+              )}
+            >
+              TR
+            </button>
+            <button
+              onClick={() => setLocale('en')}
+              className={cn(
+                "px-3 py-1 rounded-full text-[10px] font-bold transition-all",
+                locale === 'en' ? "bg-gold text-white shadow-sm" : "text-stone-500 hover:text-stone-800"
+              )}
+            >
+              EN
+            </button>
+          </div>
+
           <a href="https://instagram.com/adile___makeup_hair_studio" target="_blank" rel="noreferrer" className="hover:text-gold transition-colors">
             <Instagram size={20} />
           </a>
           <a href="tel:+905447236702" className="flex items-center space-x-2 bg-gold text-white px-4 py-2 rounded-full text-xs uppercase tracking-widest hover:bg-gold-dark transition-all">
             <Phone size={14} />
-            <span>Randevu Al</span>
+            <span>{t('nav.book')}</span>
           </a>
         </div>
 
         {/* Mobile Toggle */}
-        <button
-          className="md:hidden text-stone-900"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center space-x-4 md:hidden">
+           <div className="flex items-center bg-stone-100/50 rounded-full p-1 border border-stone-200">
+            <button
+              onClick={() => setLocale('tr')}
+              className={cn(
+                "px-2 py-1 rounded-full text-[10px] font-bold transition-all",
+                locale === 'tr' ? "bg-gold text-white shadow-sm" : "text-stone-500"
+              )}
+            >
+              TR
+            </button>
+            <button
+              onClick={() => setLocale('en')}
+              className={cn(
+                "px-2 py-1 rounded-full text-[10px] font-bold transition-all",
+                locale === 'en' ? "bg-gold text-white shadow-sm" : "text-stone-500"
+              )}
+            >
+              EN
+            </button>
+          </div>
+          <button
+            className="text-stone-900"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -107,7 +153,7 @@ export default function Navbar() {
                 <Instagram size={24} />
               </a>
               <a href="tel:+905447236702" className="bg-gold text-white px-6 py-3 rounded-full text-xs uppercase tracking-widest">
-                Hemen Ara
+                {t('nav.call')}
               </a>
             </div>
           </motion.div>

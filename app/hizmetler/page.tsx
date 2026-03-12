@@ -5,8 +5,11 @@ import Footer from '@/components/Footer';
 import Services from '@/components/Services';
 import Appointment from '@/components/Appointment';
 import { motion } from 'motion/react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function HizmetlerPage() {
+  const { t } = useLanguage();
+
   return (
     <main className="relative">
       <Navbar />
@@ -28,11 +31,11 @@ export default function HizmetlerPage() {
             transition={{ duration: 0.8 }}
           >
             <span className="text-gold uppercase tracking-[0.3em] text-sm mb-4 block">
-              Güzellik Uzmanlığı
+              {t('services.page.subtitle')}
             </span>
-            <h1 className="text-5xl md:text-7xl font-display mb-6">Hizmetlerimiz</h1>
+            <h1 className="text-5xl md:text-7xl font-display mb-6">{t('services.page.title')}</h1>
             <p className="text-white/60 max-w-2xl mx-auto font-light text-lg">
-              En özel günlerinizde hayalinizdeki görünüme kavuşmanız için sunduğumuz profesyonel çözümler.
+              {t('services.page.desc')}
             </p>
           </motion.div>
         </div>

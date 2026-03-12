@@ -4,20 +4,22 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { X, Maximize2 } from 'lucide-react';
-
-const images = [
-  { id: 1, src: 'https://images.unsplash.com/photo-1594465919760-441fe5908ab0?q=80&w=800&auto=format&fit=crop', category: 'Gelin Saçı' },
-  { id: 2, src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800&auto=format&fit=crop', category: 'Gelin Makyajı' },
-  { id: 3, src: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop', category: 'Profesyonel Makyaj' },
-  { id: 4, src: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop', category: 'Özel Gün' },
-  { id: 5, src: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=800&auto=format&fit=crop', category: 'Nişan Saçı' },
-  { id: 6, src: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=800&auto=format&fit=crop', category: 'Saç Tasarımı' },
-  { id: 7, src: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=800&auto=format&fit=crop', category: 'Gelin Saçı' },
-  { id: 8, src: 'https://images.unsplash.com/photo-1519415510236-8559b1985602?q=80&w=800&auto=format&fit=crop', category: 'Makyaj' },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Gallery() {
+  const { t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+  const images = [
+    { id: 1, src: 'https://images.unsplash.com/photo-1594465919760-441fe5908ab0?q=80&w=800&auto=format&fit=crop', category: t('services.bridal.hair') },
+    { id: 2, src: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?q=80&w=800&auto=format&fit=crop', category: t('services.bridal.makeup') },
+    { id: 3, src: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop', category: t('services.makeup.title') },
+    { id: 4, src: 'https://images.unsplash.com/photo-1522337660859-02fbefca4702?q=80&w=800&auto=format&fit=crop', category: t('services.special.makeup') },
+    { id: 5, src: 'https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=800&auto=format&fit=crop', category: t('services.engagement.hair') },
+    { id: 6, src: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?q=80&w=800&auto=format&fit=crop', category: t('services.hair.title') },
+    { id: 7, src: 'https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=800&auto=format&fit=crop', category: t('services.bridal.hair') },
+    { id: 8, src: 'https://images.unsplash.com/photo-1519415510236-8559b1985602?q=80&w=800&auto=format&fit=crop', category: t('services.makeup.title') },
+  ];
 
   return (
     <section id="galeri" className="py-24 px-6 bg-white">
@@ -28,11 +30,11 @@ export default function Gallery() {
             whileInView={{ opacity: 1 }}
             className="text-gold uppercase tracking-[0.3em] text-sm mb-4 block"
           >
-            Çalışmalarımız
+            {t('gallery.subtitle')}
           </motion.span>
-          <h2 className="text-4xl md:text-5xl font-display mb-6">Güzellik Galerisi</h2>
+          <h2 className="text-4xl md:text-5xl font-display mb-6">{t('gallery.title')}</h2>
           <p className="text-stone-500 max-w-2xl mx-auto font-light">
-            Stüdyomuzda gerçekleştirdiğimiz profesyonel dokunuşlardan bazı kareler.
+            {t('gallery.subtitle')}
           </p>
         </div>
 

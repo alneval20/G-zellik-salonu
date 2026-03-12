@@ -3,8 +3,10 @@
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import { useRef } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Hero() {
+  const { t } = useLanguage();
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -45,13 +47,13 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.5 }}
         >
           <span className="text-white/90 uppercase tracking-[0.5em] text-sm mb-6 block font-medium">
-            Güzelliğin Sanatla Buluştuğu Nokta
+            {t('hero.subtitle')}
           </span>
           <h1 className="text-5xl md:text-8xl text-white font-display mb-8 leading-tight drop-shadow-lg">
-            Profesyonel Gelin <br /> Saçı ve Makyaj
+            {t('hero.title')}
           </h1>
           <p className="text-white/90 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-light tracking-wide drop-shadow-md">
-            Söke&apos;de özel günleriniz için profesyonel saç ve makyaj hizmeti ile hayalinizdeki görünüme kavuşun.
+            {t('hero.description')}
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
@@ -61,7 +63,7 @@ export default function Hero() {
               whileTap={{ scale: 0.95 }}
               className="bg-gold text-white px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] font-bold hover:bg-gold-dark transition-all shadow-xl"
             >
-              Randevu Al
+              {t('hero.cta.book')}
             </motion.a>
             <motion.a
               href="#hizmetler"
@@ -69,7 +71,7 @@ export default function Hero() {
               whileTap={{ scale: 0.95 }}
               className="bg-white/10 backdrop-blur-md border border-white/30 text-white px-10 py-4 rounded-full text-sm uppercase tracking-[0.2em] font-bold hover:bg-white/20 transition-all"
             >
-              Hizmetlerimiz
+              {t('hero.cta.services')}
             </motion.a>
           </div>
         </motion.div>
@@ -82,7 +84,7 @@ export default function Hero() {
         transition={{ delay: 2, duration: 1 }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white flex flex-col items-center gap-2"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em] opacity-70">Keşfet</span>
+        <span className="text-[10px] uppercase tracking-[0.3em] opacity-70">{t('hero.scroll')}</span>
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}

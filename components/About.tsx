@@ -2,8 +2,11 @@
 
 import { motion } from 'motion/react';
 import Image from 'next/image';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function About() {
+  const { t } = useLanguage();
+
   return (
     <section id="hakkimizda" className="py-24 px-6 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -25,7 +28,7 @@ export default function About() {
               />
               <div className="absolute -bottom-8 -right-8 bg-gold p-8 rounded-2xl shadow-xl hidden md:block">
                 <span className="text-white text-4xl font-display block">10+</span>
-                <span className="text-white/80 text-xs uppercase tracking-widest">Yıllık Tecrübe</span>
+                <span className="text-white/80 text-xs uppercase tracking-widest">{t('about.stat2.label')}</span>
               </div>
             </div>
           </motion.div>
@@ -36,30 +39,27 @@ export default function About() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="text-gold uppercase tracking-[0.3em] text-sm mb-4 block">Hikayemiz</span>
+            <span className="text-gold uppercase tracking-[0.3em] text-sm mb-4 block">{t('about.subtitle')}</span>
             <h2 className="text-4xl md:text-5xl font-display mb-8 leading-tight">
-              Güzelliğinizi Profesyonel <br /> Ellerle Taçlandırıyoruz
+              {t('about.title')}
             </h2>
             <div className="space-y-6 text-stone-600 leading-relaxed text-lg font-light">
               <p>
-                Adile Makeup & Hair Studio olarak, Söke&apos;nin kalbinde her kadının içindeki eşsiz güzelliği ortaya çıkarmak için tutkuyla çalışıyoruz. Özellikle gelin saçı ve profesyonel makyaj konularında uzmanlaşmış ekibimizle, en özel günlerinizde yanınızdayız.
+                {t('about.p1')}
               </p>
               <p>
-                Modern teknikleri, en kaliteli ürünlerle birleştirerek size sadece bir kuaför hizmeti değil, kendinizi özel hissedeceğiniz bir deneyim sunuyoruz. Her gelin bizim için yeni bir sanat eseridir ve bu bilinçle her detaya özen gösteriyoruz.
-              </p>
-              <p>
-                Lüks ve konforlu stüdyomuzda, hayalinizdeki görünüme kavuşmanız için sizi bekliyoruz.
+                {t('about.p2')}
               </p>
             </div>
             
             <div className="mt-12 grid grid-cols-2 gap-8">
               <div>
-                <h4 className="font-display text-xl mb-2">Vizyonumuz</h4>
-                <p className="text-sm text-stone-500">Söke&apos;de güzellik standartlarını belirleyen, yenilikçi ve öncü bir stüdyo olmak.</p>
+                <h4 className="font-display text-xl mb-2">{t('about.vision.title')}</h4>
+                <p className="text-sm text-stone-500">{t('about.vision.desc')}</p>
               </div>
               <div>
-                <h4 className="font-display text-xl mb-2">Misyonumuz</h4>
-                <p className="text-sm text-stone-500">Her müşterimizin stüdyomuzdan mutlu ve özgüvenli bir şekilde ayrılmasını sağlamak.</p>
+                <h4 className="font-display text-xl mb-2">{t('about.mission.title')}</h4>
+                <p className="text-sm text-stone-500">{t('about.mission.desc')}</p>
               </div>
             </div>
           </motion.div>
