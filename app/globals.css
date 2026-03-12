@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@theme {
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  
+  --color-gold-light: #f3e5ab;
+  --color-gold: #d4af37;
+  --color-gold-dark: #996515;
+  --color-luxury-pink: #fdf2f2;
+  --color-luxury-cream: #f9f6f2;
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+.glass-card {
+  @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+}
+
+.luxury-gradient {
+  background: linear-gradient(135deg, #f9f6f2 0%, #fdf2f2 100%);
+}
+
+.gold-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-gold via-gold-dark to-gold;
+}
+
+/* react-day-picker customization */
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #d4af37;
+  --rdp-background-color: #f3e5ab;
+  margin: 0;
+}

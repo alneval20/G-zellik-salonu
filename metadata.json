@@ -1,0 +1,5 @@
+{
+  "name": "Adile Makeup & Hair Studio",
+  "description": "Söke'de profesyonel gelin saçı ve makyaj hizmetleri sunan lüks beauty studio.",
+  "requestFramePermissions": ["geolocation"]
+}
